@@ -11,8 +11,9 @@ The shell parses and executes user commands, supports input/output redirection a
 * cd
 * ls
 * exit
-* all other general commands available in UNIX 
 * pipe handling
+* all other general commands available in UNIX 
+
 
 
 ### Technical Details
