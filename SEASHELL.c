@@ -1,4 +1,4 @@
-// C Program to design a shell in Linux
+// C Program to build a shell in Linux
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
@@ -78,8 +78,7 @@ void execArgs(char** parsed)
 // Function where the piped system commands is executed
 void execArgsPiped(char** parsed, char** parsedpipe)
 {
-    // 0 is read end, 1 is write end of the pipe
-    int pipefd[2]; 
+    int pipefd[2];
     pid_t p1, p2;
 
     if (pipe(pipefd) < 0) {
@@ -93,42 +92,46 @@ void execArgsPiped(char** parsed, char** parsedpipe)
     }
 
     if (p1 == 0) {
-        // Child 1 executing..
-        // It only needs to write at the write end
-        close(pipefd[0]);
-        dup2(pipefd[1], STDOUT_FILENO);
-        close(pipefd[1]);
+        // Child 1: write end of pipe
+        close(pipefd[0]);               // Close unused read end
+        dup2(pipefd[1], STDOUT_FILENO); // Redirect stdout to pipe write end
+        close(pipefd[1]);               // Close original write end fd
 
         if (execvp(parsed[0], parsed) < 0) {
             printf("\nCould not execute command 1..");
-            exit(0);
+            exit(1);
         }
     } else {
-        // Parent executing
-        p2 = fork();
+        // Parent process
 
+        p2 = fork();
         if (p2 < 0) {
             printf("\nCould not fork");
             return;
         }
 
-        // Child 2 executing..
-        // It only needs to read at the read end
         if (p2 == 0) {
-            close(pipefd[1]);
-            dup2(pipefd[0], STDIN_FILENO);
-            close(pipefd[0]);
+            // Child 2: read end of pipe
+            close(pipefd[1]);             // Close unused write end
+            dup2(pipefd[0], STDIN_FILENO); // Redirect stdin to pipe read end
+            close(pipefd[0]);             // Close original read end fd
+
             if (execvp(parsedpipe[0], parsedpipe) < 0) {
                 printf("\nCould not execute command 2..");
-                exit(0);
+                exit(1);
             }
         } else {
-            // parent executing, waiting for two children
-            wait(NULL);
-            wait(NULL);
+            // Parent closes both ends of the pipe
+            close(pipefd[0]);
+            close(pipefd[1]);
+
+            // Now wait for both children to finish
+            waitpid(p1, NULL, 0);
+            waitpid(p2, NULL, 0);
         }
     }
 }
+
 
 // Help command
 void openHelp()
