@@ -1,0 +1,69 @@
+Script started on 2025-05-27 22:09:01+00:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="80" LINES="24"]
+[?2004h]0;vboxuser@2butt: ~/Desktop/seashell[01;32mvboxuser@2butt[00m:[01;34m~/Desktop/seashell[00m$ gcc -o SEASHELL SEASHELL.C[Kc -lreadline
+[?2004l[?2004h]0;vboxuser@2butt: ~/Desktop/seashell[01;32mvboxuser@2butt[00m:[01;34m~/Desktop/seashell[00m$ ./SEASHELL
+[?2004l[H[J
+
+
+
+******************************************
+
+
+	****MY SHELL****
+
+	--SEA(C)shell--
+
+
+
+**********Type Hello to get started*********************************
+
+
+USER is: @vboxuser
+[H[J
+Dir: /home/vboxuser/Desktop/seashell[?2004h
+>>> Hello
+[?2004l
+Could not execute command..
+Dir: /home/vboxuser/Desktop/seashell[?2004h
+>>> hello
+[?2004l
+Hello vboxuser.
+welcome to my shell SEA(C)shell
+
+type help to know more and to get a list of all available commands
+
+Dir: /home/vboxuser/Desktop/seashell[?2004h
+>>> help
+[?2004l
+***WELCOME TO MY SHELL HELP***
+-Use the shell at your own risk...
+List of Commands supported:
+>cd
+>ls
+>exit
+>all other general commands available in UNIX shell
+>pipe handling
+>improper space handling
+
+Dir: /home/vboxuser/Desktop/seashell[?2004h
+>>> cd
+[?2004l
+Dir: /home/vboxuser/Desktop/seashell[?2004h
+>>> ls
+[?2004lmy_session.log	SEASHELL  SEASHELL.c
+
+Dir: /home/vboxuser/Desktop/seashell[?2004h
+>>> [7mls | grep txt[27m
+[A[C[C[C[Cls | grep txt
+[A
+[?2004lmy_session.log
+SEASHELL
+SEASHELL.c
+
+Dir: /home/vboxuser/Desktop/seashell[?2004h
+>>> exit
+[?2004l
+Goodbye
+[?2004h]0;vboxuser@2butt: ~/Desktop/seashell[01;32mvboxuser@2butt[00m:[01;34m~/Desktop/seashell[00m$ exit
+[?2004lexit
+
+Script done on 2025-05-27 22:12:49+00:00 [COMMAND_EXIT_CODE="0"]
