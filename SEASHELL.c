@@ -254,6 +254,10 @@ int main()
     int execFlag = 0;
     init_shell();
 
+    // save original stdin and stdout
+     int original_stdin = dup(STDIN_FILENO);
+     int original_stdout = dup(STDOUT_FILENO);
+
     while (1) {
         // print shell line
         printDir();
@@ -263,17 +267,20 @@ int main()
         // process
         execFlag = processString(inputString,
         parsedArgs, parsedArgsPiped);
-        // execflag returns zero if there is no command
-        // or it is a builtin command,
-        // 1 if it is a simple command
-        // 2 if it is including a pipe.
+        // execflag returns zero if there is no command or it is a builtin command,
+        // 1 if it is a simple command, and 2 if it is including a pipe.
 
-        // execute
+        // execution
         if (execFlag == 1)
             execArgs(parsedArgs);
 
         if (execFlag == 2)
             execArgsPiped(parsedArgs, parsedArgsPiped);
+
+        // restore stdin and stdout after each command
+        dup2(original_stdin, STDIN_FILENO);
+        dup2(original_stdout, STDOUT_FILENO);
     }
+    
     return 0;
 }
